@@ -7,8 +7,9 @@
 
 int main()
 {
-	// Déclaration des variables.
+	// DÃ©claration des variables.
 	// ...
+	//test de modification
 	int choix_menu = 0;
 	t_bibliotheque bibli;
 
@@ -107,7 +108,7 @@ void retirer_sautligne(char * chaine)
 {
 	int pos = strlen(chaine) - 1;
 	if (chaine != NULL && chaine[pos] == '\n')
-		chaine[pos] = '\0'; // Si on trouve \n à la fin, on le remplace par \0
+		chaine[pos] = '\0'; // Si on trouve \n Ã  la fin, on le remplace par \0
 }
 
 int demander_choix_menu()
