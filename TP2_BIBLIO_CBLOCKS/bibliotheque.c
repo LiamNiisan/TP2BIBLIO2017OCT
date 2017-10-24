@@ -7,8 +7,9 @@
 
 int main()
 {
-	// Déclaration des variables.
+	// DÃ©claration des variables.
 	// ...
+	//test de modification
 	int choix_menu = 0;
 	t_bibliotheque bibli;
 
@@ -107,12 +108,37 @@ void retirer_sautligne(char * chaine)
 {
 	int pos = strlen(chaine) - 1;
 	if (chaine != NULL && chaine[pos] == '\n')
-		chaine[pos] = '\0'; // Si on trouve \n à la fin, on le remplace par \0
+		chaine[pos] = '\0'; // Si on trouve \n Ã  la fin, on le remplace par \0
 }
 
 int demander_choix_menu()
 {
-	printf("TO BE CONTINUED...");
+    int choix_user=0;
+
+	printf("================================================================================\n");
+	printf("                                Bibliotheque 2000\n");
+	printf("================================================================================\n");
+
+	printf("1.\n");
+	printf("2.\n");
+	printf("3.\n");
+	printf("4.\n");
+	printf("5.\n");
+	printf("6.\n");
+	printf("7.\n");
+	printf("8.\n");
+	printf("9.\n");
+    printf("0. Quitter");
+    printf("\n\n");
+
+	printf("================================================================================\n");
+
+        do{
+
+         scanf("%d",&choix_user);
+
+        }while(choix_user < 1 || choix_user > 9);
+
 }
 
 void initialiser_bibliotheque(t_bibliotheque * pBibli)
