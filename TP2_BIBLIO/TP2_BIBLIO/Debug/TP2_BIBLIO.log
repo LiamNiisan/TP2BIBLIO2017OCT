@@ -1,0 +1,6 @@
+﻿  bibliotheque.c
+c:\users\admin\source\repos\tp2_biblio\tp2_biblio\bibliotheque.c(16): warning C4013: 'time' undefined; assuming extern returning int
+c:\users\admin\source\repos\tp2_biblio\tp2_biblio\bibliotheque.c(103): warning C4013: '_getch' undefined; assuming extern returning int
+c:\users\admin\source\repos\tp2_biblio\tp2_biblio\bibliotheque.c(116): warning C4716: 'demander_choix_menu': must return a value
+  TP2_BIBLIO.vcxproj -> C:\Users\Admin\source\repos\TP2_BIBLIO\Debug\TP2_BIBLIO.exe
+  TP2_BIBLIO.vcxproj -> C:\Users\Admin\source\repos\TP2_BIBLIO\Debug\TP2_BIBLIO.pdb (Partial PDB)
