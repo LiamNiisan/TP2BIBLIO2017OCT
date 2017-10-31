@@ -31,9 +31,10 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="main.c">
+		<Unit filename="bibliotheque.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="bibliotheque.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

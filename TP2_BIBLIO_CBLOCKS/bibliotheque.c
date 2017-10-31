@@ -11,11 +11,12 @@ int main()
 	int choix_menu = 0;
 	t_bibliotheque bibli;
 
+
 	// Initialisation de la fonction rand()
 	srand(time(NULL));
 
 	// Initialisation de la bibliotheque
-	// ...
+	initialiser_bibliotheque(&bibli);
 
 
 
@@ -48,6 +49,7 @@ void lire_fichier(t_bibliotheque * pBibli)
 	// ...
 
 #if(SIMULATION == 1)
+
 	simuler_lire_fichier(pBibli);
 
 	// ...
@@ -55,7 +57,7 @@ void lire_fichier(t_bibliotheque * pBibli)
 #else
 
 	// ...
-
+initialiser_bibliotheque(t_bibliotheque * pBibli)
 #endif
 
 	// ...
@@ -143,8 +145,11 @@ int demander_choix_menu()
 
 void initialiser_bibliotheque(t_bibliotheque * pBibli)
 {
-	printf("TO BE CONTINUED...\n\n");
-
+    int i;
+    for(i = 0; i < NB_GENRES; i++)
+    {
+        pBibli->nb_livres[i] = 0;
+    }
 }
 
 void initialiser_livre(t_livre * pLivre)
