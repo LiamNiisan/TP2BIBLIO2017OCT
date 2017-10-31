@@ -8,7 +8,7 @@
 #define BIBLIO_FICHIER				"biblio.txt"
 
 #define TAILLE_TITRE	80
-#define TAILLE_NOM		30	
+#define TAILLE_NOM		30
 #define TAILLE_PRENOM	30
 
 #define MAX_ISBN		9999
@@ -73,6 +73,9 @@ void retirer_livre(t_bibliotheque * pBibli);
 void modifier_livre(t_bibliotheque * pBibli);
 
 void retirer_sautligne(char * chaine);
+
 void super_pause();
+
+int verifier_disp_bibliotheque(t_bibliotheque * pBibli);
 
 #endif

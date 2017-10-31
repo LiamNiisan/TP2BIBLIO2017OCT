@@ -37,10 +37,11 @@ int main()
 		case 8: sauvegarder_fichier(&bibli); break;
 		case 9: trier_livres(&bibli); break;
 		case 0: break; // Quitter.
-		default: break;
+		default: exit(0); break;
 		}
 	} while (choix_menu != 0);
 
+	exit(0);
 	return EXIT_SUCCESS;
 }
 
@@ -114,7 +115,7 @@ void retirer_sautligne(char * chaine)
 }
 
 int demander_choix_menu()
-{
+{printf("rempli");
     int choix_user=0;
 
 	printf("================================================================================\n");
@@ -139,13 +140,14 @@ int demander_choix_menu()
 
          scanf("%d",&choix_user);
 
-        }while(choix_user < 1 || choix_user > 9);
+        }while(choix_user < 0 || choix_user > 9);
 
 }
 
 void initialiser_bibliotheque(t_bibliotheque * pBibli)
 {
     int i;
+
     for(i = 0; i < NB_GENRES; i++)
     {
         pBibli->nb_livres[i] = 0;
@@ -174,8 +176,14 @@ void trier_livres(t_bibliotheque * pBibli)
 
 void afficher_bibliotheque(t_bibliotheque * pBibli)
 {
-	printf("TO BE CONTINUED...\n\n");
-
+	if(verifier_disp_bibliotheque(pBibli))
+    {
+        printf("rempli");
+    }
+    else
+    {
+        printf("Bibliotheque vide, veuillez l'actualiser \n");
+    }
 }
 
 void generer_rapport(t_bibliotheque *pBibli)
@@ -201,6 +209,22 @@ void modifier_livre(t_bibliotheque * pBibli)
 void retirer_livre(t_bibliotheque * pBibli)
 {
 	printf("TO BE CONTINUED...\n\n");
+}
+
+
+int verifier_disp_bibliotheque(t_bibliotheque * pBibli)
+{
+    int i;
+    int rempli = 0;
+    for(i = 0; i < NB_GENRES; i++)
+    {
+        if (pBibli->nb_livres[i] != 0)
+        {
+            rempli++;
+        }
+    }
+
+    return rempli;
 }
 
 
