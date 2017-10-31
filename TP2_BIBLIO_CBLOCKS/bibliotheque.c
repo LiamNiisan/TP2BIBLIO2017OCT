@@ -8,8 +8,6 @@
 int main()
 {
 	// Déclaration des variables.
-	// ...
-	//test de modification
 	int choix_menu = 0;
 	t_bibliotheque bibli;
 
@@ -18,6 +16,8 @@ int main()
 
 	// Initialisation de la bibliotheque
 	// ...
+
+
 
 	do
 	{
@@ -119,16 +119,16 @@ int demander_choix_menu()
 	printf("                                Bibliotheque 2000\n");
 	printf("================================================================================\n");
 
-	printf("1.\n");
-	printf("2.\n");
-	printf("3.\n");
-	printf("4.\n");
-	printf("5.\n");
-	printf("6.\n");
-	printf("7.\n");
-	printf("8.\n");
-	printf("9.\n");
-    printf("0. Quitter");
+	printf("1 - Afficher Bibliotheque\n");
+	printf("2 - Lire Fichier Bibliotheque\n");
+	printf("3 - Modifier Livre\n");
+	printf("4 - Retirer Livre\n");
+	printf("5 - Emprunter Livre\n");
+	printf("6 - Retourner Livre (Lundi Matin)\n");
+	printf("7 - Generer Rapport\n");
+	printf("8 - Sauvegarder Bibliotheque\n");
+	printf("9 - Trier Livres (bonus)\n");
+    printf("0 - Quitter");
     printf("\n\n");
 
 	printf("================================================================================\n");
@@ -143,55 +143,59 @@ int demander_choix_menu()
 
 void initialiser_bibliotheque(t_bibliotheque * pBibli)
 {
-	printf("TO BE CONTINUED...");
+	printf("TO BE CONTINUED...\n\n");
+
 }
 
 void initialiser_livre(t_livre * pLivre)
 {
-	printf("TO BE CONTINUED...");
+	printf("TO BE CONTINUED...\n\n");
 }
 
 void initialiser_rapport(t_rapport * pRapport)
 {
-	printf("TO BE CONTINUED...");
+	printf("TO BE CONTINUED...\n\n");
 }
 
 void sauvegarder_fichier(t_bibliotheque * pBibli)
 {
-	printf("TO BE CONTINUED...");
+	printf("TO BE CONTINUED...\n\n");
 }
 
 void trier_livres(t_bibliotheque * pBibli)
 {
-	printf("TO BE CONTINUED...");
+	printf("TO BE CONTINUED...\n\n");
 }
 
 void afficher_bibliotheque(t_bibliotheque * pBibli)
 {
-	printf("TO BE CONTINUED...");
+	printf("TO BE CONTINUED...\n\n");
+
 }
 
 void generer_rapport(t_bibliotheque *pBibli)
 {
-	printf("TO BE CONTINUED...");
+	printf("TO BE CONTINUED...\n\n");
 }
 
 void emprunter_livre(t_bibliotheque * pBibli)
 {
-	printf("TO BE CONTINUED...");
+	printf("TO BE CONTINUED...\n\n");
 }
 
 void gerer_retours(t_bibliotheque * pBibli)
 {
-	printf("TO BE CONTINUED...");
+	printf("TO BE CONTINUED...\n\n");
 }
 
 void modifier_livre(t_bibliotheque * pBibli)
 {
-	printf("TO BE CONTINUED...");
+	printf("TO BE CONTINUED...\n\n");
 }
 
 void retirer_livre(t_bibliotheque * pBibli)
 {
-	printf("TO BE CONTINUED...");
+	printf("TO BE CONTINUED...\n\n");
 }
+
+
