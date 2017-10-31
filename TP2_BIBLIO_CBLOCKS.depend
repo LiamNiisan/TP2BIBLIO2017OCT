@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1509460210 source:c:\users\ap06920\desktop\tp2biblio2017oct-master\tp2_biblio_cblocks\bibliotheque.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"bibliotheque.h"
+
+1509457850 c:\users\ap06920\desktop\tp2biblio2017oct-master\tp2_biblio_cblocks\bibliotheque.h
+
