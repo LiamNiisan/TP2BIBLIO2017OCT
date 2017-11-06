@@ -10,6 +10,9 @@ int main()
 	// Déclaration des variables.
 	int choix_menu = 0;
 	t_bibliotheque bibli;
+	t_rapport rapport;
+
+
 
 
 	// Initialisation de la fonction rand()
@@ -18,6 +21,8 @@ int main()
 	// Initialisation de la bibliotheque
 	initialiser_bibliotheque(&bibli);
 
+    //initialisation du rapport
+    initialiser_rapport(&rapport);
 
 
 	do
@@ -47,7 +52,8 @@ int main()
 
 void lire_fichier(t_bibliotheque * pBibli)
 {
-	// ...
+
+    printf("Lecture du fichier de bibliotheque... Done\n");
 
 #if(SIMULATION == 1)
 
@@ -61,7 +67,8 @@ void lire_fichier(t_bibliotheque * pBibli)
 initialiser_bibliotheque(t_bibliotheque * pBibli)
 #endif
 
-	// ...
+super_pause();
+
 }
 
 void simuler_lire_fichier(t_bibliotheque * pBibli)
@@ -114,8 +121,7 @@ void retirer_sautligne(char * chaine)
 		chaine[pos] = '\0'; // Si on trouve \n à la fin, on le remplace par \0
 }
 
-int demander_choix_menu()
-{printf("rempli");
+int demander_choix_menu(){
     int choix_user=0;
 
 	printf("================================================================================\n");
@@ -159,9 +165,14 @@ void initialiser_livre(t_livre * pLivre)
 	printf("TO BE CONTINUED...\n\n");
 }
 
-void initialiser_rapport(t_rapport * pRapport)
+int initialiser_rapport(t_rapport * pRapport)
 {
-	printf("TO BE CONTINUED...\n\n");
+
+
+	pRapport -> nb_livres_dispo=0;
+	pRapport->nb_livres_emprunt=0;
+
+
 }
 
 void sauvegarder_fichier(t_bibliotheque * pBibli)
@@ -178,17 +189,29 @@ void afficher_bibliotheque(t_bibliotheque * pBibli)
 {
 	if(verifier_disp_bibliotheque(pBibli))
     {
-        printf("rempli");
+        printf("La bibliothque est charger...\n");
+        super_pause();
+
+
     }
     else
     {
-        printf("Bibliotheque vide, veuillez l'actualiser \n");
+        printf("Bibliotheque vide, veuillez l'actualiser... \n");
+        super_pause();
     }
 }
 
-void generer_rapport(t_bibliotheque *pBibli)
+void generer_rapport(t_rapport * pRapport)
 {
-	printf("TO BE CONTINUED...\n\n");
+    //pRapport -> nb_livres_dispo=5;
+	//pRapport -> nb_livres_emprunt=10;
+
+    printf("#######################################\n");
+	printf("Nombre de livres disponibles : %d\n",pRapport->nb_livres_dispo);
+	printf("Nombre de livres emprunts : %d\n",pRapport->nb_livres_emprunt);
+    printf("#######################################\n");
+    super_pause();
+
 }
 
 void emprunter_livre(t_bibliotheque * pBibli)
@@ -226,5 +249,6 @@ int verifier_disp_bibliotheque(t_bibliotheque * pBibli)
 
     return rempli;
 }
+
 
 
