@@ -24,7 +24,7 @@ typedef struct
 {
 	int nb_livres_dispo;
 	int nb_livres_emprunt;
-	// à compléter.
+	// Ã  complÃ©ter.
 
 } t_rapport;
 
@@ -51,7 +51,7 @@ int demander_choix_menu();
 
 void initialiser_bibliotheque(t_bibliotheque * pBibli);
 void initialiser_livre(t_livre * pLivre);
-void initialiser_rapport(t_rapport * pRapport);
+int initialiser_rapport(t_rapport * pRapport);
 
 void sauvegarder_fichier(t_bibliotheque * pBibli);
 void lire_fichier(t_bibliotheque * pBibli);
@@ -62,7 +62,7 @@ void trier_livres(t_bibliotheque * pBibli);
 
 void afficher_bibliotheque(t_bibliotheque * pBibli);
 
-void generer_rapport(t_bibliotheque *pBibli);
+void generer_rapport(t_rapport * pRapport);
 
 void emprunter_livre(t_bibliotheque * pBibli);
 
