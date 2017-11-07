@@ -5,6 +5,10 @@
 #include <string.h>
 #include "bibliotheque.h"
 
+
+#define FICHIERBIBLIO "biblio.txt"
+
+
 int main()
 {
 	// Déclaration des variables.
@@ -12,11 +16,18 @@ int main()
 	t_bibliotheque bibli;
 
 
+
+
+
 	// Initialisation de la fonction rand()
 	srand(time(NULL));
 
 	// Initialisation de la bibliotheque
 	initialiser_bibliotheque(&bibli);
+
+    //initialisation du rapport
+    initialiser_rapport(&bibli);
+
 
 	do
 	{
@@ -45,21 +56,30 @@ int main()
 
 void lire_fichier(t_bibliotheque * pBibli)
 {
-	// ...
 
-#if(SIMULATION == 1)
+    FILE * fichierbiblio;
 
-	simuler_lire_fichier(pBibli);
+    fichierbiblio = fopen("biblio.txt","rt");
 
-	// ...
+    if(fichierbiblio==NULL){
+        printf("Erreur de lecture du fichier %s ... \n", FICHIERBIBLIO);
+        fclose(fichierbiblio);
+    }
 
-#else
+    else{
 
-	// ...
-initialiser_bibliotheque(t_bibliotheque * pBibli)
-#endif
+        
 
-	// ...
+
+       fclose(fichierbiblio);
+    }
+
+
+    printf("Lecture du fichier de bibliotheque... Done\n");
+
+
+
+
 }
 
 void simuler_lire_fichier(t_bibliotheque * pBibli)
@@ -112,8 +132,7 @@ void retirer_sautligne(char * chaine)
 		chaine[pos] = '\0'; // Si on trouve \n à la fin, on le remplace par \0
 }
 
-int demander_choix_menu()
-{
+int demander_choix_menu(){
     int choix_user=0;
 
 	printf("================================================================================\n");
@@ -157,9 +176,12 @@ void initialiser_livre(t_livre * pLivre)
 	printf("TO BE CONTINUED...\n\n");
 }
 
-void initialiser_rapport(t_rapport * pRapport)
+void initialiser_rapport(t_bibliotheque * pBibli)
 {
-	printf("TO BE CONTINUED...\n\n");
+
+        pBibli->rapport.nb_livres_dispo=0;
+        pBibli->rapport.nb_livres_emprunt=0;
+
 }
 
 void sauvegarder_fichier(t_bibliotheque * pBibli)
@@ -176,17 +198,28 @@ void afficher_bibliotheque(t_bibliotheque * pBibli)
 {
 	if(verifier_disp_bibliotheque(pBibli))
     {
-        printf("rempli\n");
+        printf("La bibliothque est charger...\n");
+        super_pause();
+
+
     }
     else
     {
-        printf("Bibliotheque vide, veuillez l'actualiser \n");
+        printf("Bibliotheque vide, veuillez l'actualiser... \n");
+        super_pause();
     }
 }
 
-void generer_rapport(t_bibliotheque *pBibli)
+void generer_rapport(t_bibliotheque * pBibli)
 {
-	printf("TO BE CONTINUED...\n\n");
+
+
+    printf("#######################################\n");
+	printf("Nombre de livres disponibles : %d\n",pBibli->rapport.nb_livres_dispo);
+	printf("Nombre de livres emprunts : %d\n",pBibli->rapport.nb_livres_emprunt);
+    printf("#######################################\n");
+    super_pause();
+
 }
 
 void emprunter_livre(t_bibliotheque * pBibli)
@@ -223,47 +256,6 @@ int verifier_disp_bibliotheque(t_bibliotheque * pBibli)
     }
 
     return rempli;
-}
-
-void ecrire_fichier_txt(char * data)
-{
-    FILE * fichier;
-
-    fichier = fopen(BIBLIO_FICHIER, "wt");
-
-    if(fichier == NULL)
-    {
-        printf("Impossible d'ouvrir le fichier");
-        system("PAUSE");
-    }
-    else
-    {
-        fprintf(fichier, data);
-    }
-
-    fclose(fichier);
-}
-
-char * lire_fichier_txt()
-{
-    FILE * fichier;
-    char data[100];
-
-    fichier = fopen(BIBLIO_FICHIER, "rt");
-
-    if(fichier == NULL)
-    {
-        printf("Impossible d'ouvrir le fichier");
-        system("PAUSE");
-    }
-    else
-    {
-        fscanf(fichier, "%s", data);
-    }
-
-    fclose(fichier);
-
-    return data;
 }
 
 
