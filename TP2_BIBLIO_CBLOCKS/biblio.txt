@@ -1,0 +1,50 @@
+6
+
+1
+Les Robots Machines
+Cy
+Borgue
+321
+555
+0
+
+5
+Un tableau de pointeurs
+Pasdor
+Mi
+180
+1234
+0
+
+5
+Les fous du code
+Hugues
+Saulnier
+355
+1001
+0
+
+5
+Les Ninjas de l'Info 2
+Yannick
+Roy
+252
+369
+0
+
+4
+Les Calinours Magiques
+Jean
+Ninvente
+75
+111
+0
+
+3
+Mathematique Deux Point Zero
+Paf
+Cile
+789
+41
+0
+

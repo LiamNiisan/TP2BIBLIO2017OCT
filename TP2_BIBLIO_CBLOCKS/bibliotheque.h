@@ -47,6 +47,7 @@ typedef struct
 	t_rapport rapport;
 } t_bibliotheque;
 
+
 int demander_choix_menu();
 
 void initialiser_bibliotheque(t_bibliotheque * pBibli);

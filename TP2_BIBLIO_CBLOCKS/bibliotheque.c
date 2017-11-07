@@ -58,23 +58,76 @@ void lire_fichier(t_bibliotheque * pBibli)
 {
 
     FILE * fichierbiblio;
+    int i;
+    int nb_livre;
+    int type_livre;
+    char data[100];
+    t_livre livre_temp;
 
-    fichierbiblio = fopen("biblio.txt","rt");
+    fichierbiblio = fopen(BIBLIO_FICHIER,"rt");
 
     if(fichierbiblio==NULL){
         printf("Erreur de lecture du fichier %s ... \n", FICHIERBIBLIO);
-        fclose(fichierbiblio);
     }
 
     else{
+        /*pBibli->livres[]
+        for(i = 0; i < NB_GENRES; i++ )
+        {
+            for(j = 0; j < pBibli->livres[i]; j++)
+            {
 
-        
+            }
+        }*/
+
+        fgets(data, TAILLE_TITRE, fichierbiblio);
+
+        nb_livre = atoi(data);
+
+        for(i = 0; i < nb_livre; i++)
+        {
+            fgets(data, TAILLE_TITRE, fichierbiblio);
+            fgets(data, TAILLE_TITRE, fichierbiblio); //genre
+            type_livre = atoi(data);
+
+            fgets(data, TAILLE_TITRE, fichierbiblio); //titre
+            strcpy(data, livre_temp.titre);
+
+            fgets(data, TAILLE_TITRE, fichierbiblio);
+            strcpy(data, livre_temp.auteur_prenom);
+
+            fgets(data, TAILLE_TITRE, fichierbiblio);
+            strcpy(data, livre_temp.auteur_nom);
+
+            fgets(data, TAILLE_TITRE, fichierbiblio);
+            livre_temp.isbn = atoi(data);
+
+            fgets(data, TAILLE_TITRE, fichierbiblio);
+            livre_temp.nb_pages = atoi(data);
+
+            fgets(data, TAILLE_TITRE, fichierbiblio);
+            livre_temp.bEmprunte = atoi(data);
+
+            pBibli->livres[type_livre][pBibli->nb_livres[type_livre]] = livre_temp;
+            pBibli->nb_livres[type_livre]++;
+
+            if(pBibli->livres[type_livre][i].bEmprunte == 0)
+            {
+                pBibli->rapport.nb_livres_dispo++;
+            }
+            else
+            {
+                pBibli->rapport.nb_livres_emprunt++;
+            }
+
+        }
 
 
-       fclose(fichierbiblio);
+pBibli->rapport.nb_livres_dispo++;
+
     }
 
-
+    fclose(fichierbiblio);
     printf("Lecture du fichier de bibliotheque... Done\n");
 
 
