@@ -18,8 +18,6 @@ int main()
 	// Initialisation de la bibliotheque
 	initialiser_bibliotheque(&bibli);
 
-
-
 	do
 	{
 		// Gestion du menu.
@@ -115,7 +113,7 @@ void retirer_sautligne(char * chaine)
 }
 
 int demander_choix_menu()
-{printf("rempli");
+{
     int choix_user=0;
 
 	printf("================================================================================\n");
@@ -178,7 +176,7 @@ void afficher_bibliotheque(t_bibliotheque * pBibli)
 {
 	if(verifier_disp_bibliotheque(pBibli))
     {
-        printf("rempli");
+        printf("rempli\n");
     }
     else
     {
@@ -225,6 +223,47 @@ int verifier_disp_bibliotheque(t_bibliotheque * pBibli)
     }
 
     return rempli;
+}
+
+void ecrire_fichier_txt(char * data)
+{
+    FILE * fichier;
+
+    fichier = fopen(BIBLIO_FICHIER, "wt");
+
+    if(fichier == NULL)
+    {
+        printf("Impossible d'ouvrir le fichier");
+        system("PAUSE");
+    }
+    else
+    {
+        fprintf(fichier, data);
+    }
+
+    fclose(fichier);
+}
+
+char * lire_fichier_txt()
+{
+    FILE * fichier;
+    char data[100];
+
+    fichier = fopen(BIBLIO_FICHIER, "rt");
+
+    if(fichier == NULL)
+    {
+        printf("Impossible d'ouvrir le fichier");
+        system("PAUSE");
+    }
+    else
+    {
+        fscanf(fichier, "%s", data);
+    }
+
+    fclose(fichier);
+
+    return data;
 }
 
 

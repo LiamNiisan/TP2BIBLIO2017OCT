@@ -78,4 +78,9 @@ void super_pause();
 
 int verifier_disp_bibliotheque(t_bibliotheque * pBibli);
 
+void ecrire_fichier_txt(char * data);
+
+char * lire_fichier_txt();
+
+
 #endif
