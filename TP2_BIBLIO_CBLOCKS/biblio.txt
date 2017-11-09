@@ -8,6 +8,22 @@ Borgue
 555
 0
 
+3
+Mathematique Deux Point Zero
+Paf
+Cile
+789
+41
+0
+
+0
+LES CALINOURS DE L'ENFER
+Obama
+Barack
+666
+111
+0
+
 5
 Un tableau de pointeurs
 Pasdor
@@ -30,21 +46,5 @@ Yannick
 Roy
 252
 369
-0
-
-4
-Les Calinours Magiques
-Jean
-Ninvente
-75
-111
-0
-
-3
-Mathematique Deux Point Zero
-Paf
-Cile
-789
-41
 0
 
