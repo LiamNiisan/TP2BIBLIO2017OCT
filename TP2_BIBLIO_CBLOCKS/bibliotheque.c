@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
+#include <windows.h>
 #include "bibliotheque.h"
 
 
@@ -13,6 +15,7 @@ int main()
 {
 	// Déclaration des variables.
 	int choix_menu = 0;
+	int lecturefichier=0;
 	t_bibliotheque bibli;
 
 
@@ -37,13 +40,12 @@ int main()
 		switch (choix_menu)
 		{
 		case 1: afficher_bibliotheque(&bibli); break;
-		case 2: lire_fichier(&bibli); break;
+		case 2: lire_fichier(&bibli,&lecturefichier); break;
 		case 3: modifier_livre(&bibli); break;
 		case 4: retirer_livre(&bibli); break;
 		case 5: emprunter_livre(&bibli); break;
 		case 6: gerer_retours(&bibli); break;
 		case 7: generer_rapport(&bibli); break;
-
 		case 8: sauvegarder_fichier(&bibli); break;
 		case 9: trier_livres(&bibli); break;
 		case 0: break; // Quitter.
@@ -55,112 +57,97 @@ int main()
 	return EXIT_SUCCESS;
 }
 
-void lire_fichier(t_bibliotheque * pBibli)
+void lire_fichier(t_bibliotheque * pBibli, int * lecture)
 {
+    int cycle=*lecture;
 
-    FILE * fichierbiblio;
-    int i;
-    int nb_livre;
-    int type_livre;
-    char data[100];
-    t_livre livre_temp;
+    if(cycle == 0){
+        FILE * fichierbiblio;
+        int i;
+        int nb_livre;
+        int type_livre;
+        char data[100];
+        t_livre livre_temp;
 
-    fichierbiblio = fopen(BIBLIO_FICHIER,"r+");
+        fichierbiblio = fopen(BIBLIO_FICHIER,"r+");
 
-    if(fichierbiblio==NULL){
-        printf("Erreur de lecture du fichier %s ... \n", FICHIERBIBLIO);
-    }
-
-    else{
-
-        fgets(data, TAILLE_TITRE, fichierbiblio);
-
-        nb_livre = atoi(data);
-
-        for(i = 0; i < nb_livre; i++)
-        {
-            fgets(data, TAILLE_TITRE, fichierbiblio);
-            fgets(data, TAILLE_TITRE, fichierbiblio); //genre
-            type_livre = atoi(data);
-
-            livre_temp.genre = (t_genre)type_livre;
-
-            fgets(data, TAILLE_TITRE, fichierbiblio); //titre
-            strcpy(livre_temp.titre, data);
-            retirer_sautligne(livre_temp.titre);
-
-            fgets(data, TAILLE_TITRE, fichierbiblio);
-            strcpy(livre_temp.auteur_prenom, data);
-            retirer_sautligne(livre_temp.auteur_prenom);
-
-            fgets(data, TAILLE_TITRE, fichierbiblio);
-            strcpy(livre_temp.auteur_nom, data);
-            retirer_sautligne(livre_temp.auteur_nom);
-
-            fgets(data, TAILLE_TITRE, fichierbiblio);
-            livre_temp.nb_pages = atoi(data);
-
-            fgets(data, TAILLE_TITRE, fichierbiblio);
-            livre_temp.isbn = atoi(data);
-
-            fgets(data, TAILLE_TITRE, fichierbiblio);
-            livre_temp.bEmprunte = atoi(data);
-
-            pBibli->livres[type_livre][pBibli->nb_livres[type_livre]] = livre_temp;
-            pBibli->nb_livres[type_livre]++;
-
-            if(pBibli->livres[type_livre][i].bEmprunte == 0)
-            {
-                pBibli->rapport.nb_livres_dispo++;
-            }
-            else
-            {
-                pBibli->rapport.nb_livres_emprunt++;
-            }
+        if(fichierbiblio==NULL){
+            printf("Erreur de lecture du fichier %s ... \n", FICHIERBIBLIO);
         }
 
-        printf("Lecture du fichier de bibliotheque... Done\n");
+        else{
+
+            fgets(data, TAILLE_TITRE, fichierbiblio);
+
+            nb_livre = atoi(data);
+
+            for(i = 0; i < nb_livre; i++)
+            {
+                fgets(data, TAILLE_TITRE, fichierbiblio);//permet de faire un saut de ligne
+                fgets(data, TAILLE_TITRE, fichierbiblio); //genre
+                type_livre = atoi(data);
+
+                livre_temp.genre = (t_genre)type_livre;
+
+                fgets(data, TAILLE_TITRE, fichierbiblio); //titre
+                strcpy(livre_temp.titre, data);
+                retirer_sautligne(livre_temp.titre);
+
+                fgets(data, TAILLE_TITRE, fichierbiblio);
+                strcpy(livre_temp.auteur_prenom, data);
+                retirer_sautligne(livre_temp.auteur_prenom);
+
+                fgets(data, TAILLE_TITRE, fichierbiblio);
+                strcpy(livre_temp.auteur_nom, data);
+                retirer_sautligne(livre_temp.auteur_nom);
+
+                fgets(data, TAILLE_TITRE, fichierbiblio);
+                livre_temp.nb_pages = atoi(data);
+
+                fgets(data, TAILLE_TITRE, fichierbiblio);
+                livre_temp.isbn = atoi(data);
+
+                fgets(data, TAILLE_TITRE, fichierbiblio);
+                livre_temp.bEmprunte = atoi(data);
+
+                pBibli->livres[type_livre][pBibli->nb_livres[type_livre]] = livre_temp;
+                pBibli->nb_livres[type_livre]++;
+
+                if(pBibli->livres[type_livre][i].bEmprunte == 0)
+                {
+                    pBibli->rapport.nb_livres_dispo++;
+                }
+                else
+                {
+                    pBibli->rapport.nb_livres_emprunt++;
+                }
+            }
+
+            printf("Lecture du fichier de bibliotheque");
+            Sleep(500);
+            printf(".");
+            Sleep(500);
+            printf(".");
+            Sleep(500);
+            printf(".");
+            Sleep(500);
+            printf("Done\n");
+        }
+
+        fclose(fichierbiblio);
+        cycle++;
+        super_pause();
+
     }
 
-    fclose(fichierbiblio);
+   else{
+    printf("Vous avez deja ouvert le fichier %s ...\n",FICHIERBIBLIO);
     super_pause();
-}
+   }
 
-void simuler_lire_fichier(t_bibliotheque * pBibli)
-{
-	t_livre livre1;
-	t_livre livre2;
-	t_livre livre3;
+    *lecture = cycle;
 
-	livre1.genre = INFORMATIQUE;
-	strcpy(livre1.titre, "Les Ninjas de l'Info 2");
-	strcpy(livre1.auteur_prenom, "Yannick");
-	strcpy(livre1.auteur_nom, "Roy");
-	livre1.nb_pages = 252;
-	livre1.isbn = 369;
-	livre1.bEmprunte = DISPONIBLE;
-	pBibli->livres[INFORMATIQUE][pBibli->nb_livres[INFORMATIQUE]] = livre1;
-	pBibli->nb_livres[INFORMATIQUE]++;
 
-	livre2.genre = INFORMATIQUE;
-	strcpy(livre2.titre, "Les fous du code");
-	strcpy(livre2.auteur_prenom, "Hugues");
-	strcpy(livre2.auteur_nom, "Saulnier");
-	livre2.nb_pages = 355;
-	livre2.isbn = 1001;
-	livre2.bEmprunte = DISPONIBLE;
-	pBibli->livres[INFORMATIQUE][pBibli->nb_livres[INFORMATIQUE]] = livre2;
-	pBibli->nb_livres[INFORMATIQUE]++;
-
-	livre3.genre = FICTION;
-	strcpy(livre3.titre, "Un tableau de pointeurs");
-	strcpy(livre3.auteur_prenom, "Pasdor");
-	strcpy(livre3.auteur_nom, "Mi");
-	livre3.nb_pages = 180;
-	livre3.isbn = 1234;
-	livre3.bEmprunte = DISPONIBLE;
-	pBibli->livres[FICTION][pBibli->nb_livres[FICTION]] = livre3;
-	pBibli->nb_livres[FICTION]++;
 }
 
 void super_pause()
@@ -219,7 +206,9 @@ void initialiser_bibliotheque(t_bibliotheque * pBibli)
 
 void initialiser_livre(t_livre * pLivre)
 {
-	printf("TO BE CONTINUED...\n\n");
+	//Il faut initialiser les livre aussi ?
+
+	//printf("TO BE CONTINUED...\n\n");
 }
 
 void initialiser_rapport(t_bibliotheque * pBibli)
@@ -232,74 +221,94 @@ void initialiser_rapport(t_bibliotheque * pBibli)
 
 void sauvegarder_fichier(t_bibliotheque * pBibli)
 {
-	FILE * fichierbiblio;
-    int i;
-    int j;
-    int nb_livre = 0;
-    char data[100];
 
-    fichierbiblio = fopen(BIBLIO_FICHIER,"w+");
+    if(verifier_disp_bibliotheque(pBibli))
+    {
 
-    if(fichierbiblio==NULL){
-        printf("Erreur de lecture du fichier %s ... \n", FICHIERBIBLIO);
+        FILE * fichierbiblio;
+        int i;
+        int j;
+        int nb_livre = 0;
+        char data[100];
+
+        fichierbiblio = fopen(BIBLIO_FICHIER,"w+");
+
+        if(fichierbiblio==NULL){
+            printf("Erreur de lecture du fichier %s ... \n", FICHIERBIBLIO);
+        }
+
+        else{
+
+            for(i = 0; i < NB_GENRES; i++)
+            {
+                nb_livre += pBibli->nb_livres[i];
+            }
+
+            itoa(nb_livre, data, 10);
+            fputs(data, fichierbiblio);
+            fputs("\n\n", fichierbiblio);
+
+            for(i = 0; i < NB_GENRES; i++)
+            {
+                for(j = 0; j < pBibli->nb_livres[i]; j++)
+                {
+
+
+                    itoa((int)pBibli->livres[i][j].genre, data, 10);
+                    fputs(data, fichierbiblio);
+                    fputs("\n", fichierbiblio);
+
+                    strcpy(data, pBibli->livres[i][j].titre);
+                    fputs(data, fichierbiblio);
+                    fputs("\n", fichierbiblio);
+
+                    strcpy(data, pBibli->livres[i][j].auteur_prenom);
+                    fputs(data, fichierbiblio);
+                    fputs("\n", fichierbiblio);
+
+                    strcpy(data, pBibli->livres[i][j].auteur_nom);
+                    fputs(data, fichierbiblio);
+                    fputs("\n", fichierbiblio);
+
+                    itoa(pBibli->livres[i][j].nb_pages, data, 10);
+                    fputs(data, fichierbiblio);
+                    fputs("\n", fichierbiblio);
+
+                    itoa(pBibli->livres[i][j].isbn, data, 10);
+                    fputs(data, fichierbiblio);
+                    fputs("\n", fichierbiblio);
+
+                    itoa(pBibli->livres[i][j].bEmprunte, data, 10);
+                    fputs(data, fichierbiblio);
+                    fputs("\n", fichierbiblio);
+
+                    fputs("\n", fichierbiblio);
+                }
+            }
+
+            printf("Sauvegarde en cours");
+            Sleep(500);
+            printf(".");
+            Sleep(500);
+            printf(".");
+            Sleep(500);
+            printf(".");
+            Sleep(500);
+            printf("Done\n");
+        }
+
+
+
+        fclose(fichierbiblio);
+        super_pause();
     }
 
     else{
-
-        for(i = 0; i < NB_GENRES; i++)
-        {
-            nb_livre += pBibli->nb_livres[i];
-        }
-
-        itoa(nb_livre, data, 10);
-        fputs(data, fichierbiblio);
-        fputs("\n\n", fichierbiblio);
-
-        for(i = 0; i < NB_GENRES; i++)
-        {
-            for(j = 0; j < pBibli->nb_livres[i]; j++)
-            {
-
-
-                itoa((int)pBibli->livres[i][j].genre, data, 10);
-                fputs(data, fichierbiblio);
-                fputs("\n", fichierbiblio);
-
-                strcpy(data, pBibli->livres[i][j].titre);
-                fputs(data, fichierbiblio);
-                fputs("\n", fichierbiblio);
-
-                strcpy(data, pBibli->livres[i][j].auteur_prenom);
-                fputs(data, fichierbiblio);
-                fputs("\n", fichierbiblio);
-
-                strcpy(data, pBibli->livres[i][j].auteur_nom);
-                fputs(data, fichierbiblio);
-                fputs("\n", fichierbiblio);
-
-                itoa(pBibli->livres[i][j].nb_pages, data, 10);
-                fputs(data, fichierbiblio);
-                fputs("\n", fichierbiblio);
-
-                itoa(pBibli->livres[i][j].isbn, data, 10);
-                fputs(data, fichierbiblio);
-                fputs("\n", fichierbiblio);
-
-                itoa(pBibli->livres[i][j].bEmprunte, data, 10);
-                fputs(data, fichierbiblio);
-                fputs("\n", fichierbiblio);
-
-                fputs("\n", fichierbiblio);
-            }
-        }
-
-        printf("Fichier sauvegarde\n");
+        printf("Vous ne pouvez pas sauvegarder vos modificiations avant d'avoir ouvert le fichier...\n");
+        super_pause();
     }
 
-    fclose(fichierbiblio);
-    super_pause();
 }
-
 void trier_livres(t_bibliotheque * pBibli)
 {
 	printf("TO BE CONTINUED...\n\n");
@@ -352,16 +361,40 @@ void generer_rapport(t_bibliotheque * pBibli)
 
 void emprunter_livre(t_bibliotheque * pBibli)
 {
-	printf("TO BE CONTINUED...\n\n");
+    int isbn=0;
+    int i=0;
+    int j=0;
+
+    if(verifier_disp_bibliotheque(pBibli)){
+
+        printf("Entrez le ISBN du livre que vous voulez emprunter : ");
+        scanf("%d",&isbn);
+
+
+        pBibli->rapport.nb_livres_emprunt++;
+
+    }
+    else{
+
+        printf("Pour emprunter un livre, vous devez ouvrir le fichier bibliotheque...\n");
+
+    }
+
+	super_pause();
 }
 
 void gerer_retours(t_bibliotheque * pBibli)
 {
 	printf("TO BE CONTINUED...\n\n");
+
+
 }
 
 void modifier_livre(t_bibliotheque * pBibli)
 {
+   if(verifier_disp_bibliotheque(pBibli)){
+
+
     int ISBN = 0;
     int i;
     int j;
@@ -415,7 +448,14 @@ void modifier_livre(t_bibliotheque * pBibli)
             }
         }
     }
+   }
 
+   else{
+
+   printf("Veuillez charger la bibliotheque avant de faire des modifications...\n");
+   super_pause();
+
+   }
 }
 
 void retirer_livre(t_bibliotheque * pBibli)
@@ -438,5 +478,8 @@ int verifier_disp_bibliotheque(t_bibliotheque * pBibli)
 
     return rempli;
 }
+
+
+
 
 
