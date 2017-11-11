@@ -1,5 +1,13 @@
 6
 
+0
+LES CALINOURS DE L'ENFER
+Obama
+Barack
+666
+111
+0
+
 1
 Les Robots Machines
 Cy
@@ -16,19 +24,11 @@ Cile
 41
 0
 
-0
-LES CALINOURS DE L'ENFER
-Obama
-Barack
-666
-111
-0
-
-5
-Un tableau de pointeurs
-Pasdor
-Mi
-180
+3
+Mein Kampf
+Adolf
+Hitler
+1939
 1234
 0
 

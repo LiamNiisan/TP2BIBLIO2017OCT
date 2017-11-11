@@ -61,7 +61,8 @@ void lire_fichier(t_bibliotheque * pBibli, int * lecture)
 {
     int cycle=*lecture;
 
-    if(cycle == 0){
+    if(cycle == 0)
+    {
         FILE * fichierbiblio;
         int i;
         int nb_livre;
@@ -203,13 +204,6 @@ void initialiser_bibliotheque(t_bibliotheque * pBibli)
     }
 }
 
-void initialiser_livre(t_livre * pLivre)
-{
-	//Il faut initialiser les livre aussi ?
-
-	//printf("TO BE CONTINUED...\n\n");
-}
-
 void initialiser_rapport(t_bibliotheque * pBibli)
 {
     pBibli->rapport.nb_livres_dispo=0;
@@ -294,13 +288,11 @@ void sauvegarder_fichier(t_bibliotheque * pBibli)
             printf("Done\n");
         }
 
-
-
         fclose(fichierbiblio);
         super_pause();
     }
-
-    else{
+    else
+    {
         printf("Vous ne pouvez pas sauvegarder vos modificiations avant d'avoir ouvert le fichier...\n");
         super_pause();
     }
@@ -427,64 +419,60 @@ void emprunter_livre(t_bibliotheque * pBibli)
         printf("Entrez le ISBN du livre que vous voulez emprunter : ");
         scanf("%d",&isbn);
 
-         for(i = 0; i < NB_GENRES; i++)
+        for(i = 0; i < NB_GENRES; i++)
         {
             for(j = 0; j < pBibli->nb_livres[i]; j++)
             {
                 if(pBibli->livres[i][j].isbn == isbn)
                 {
 
-                    if(pBibli->livres[i][j].bEmprunte == 1){
-
+                    if(pBibli->livres[i][j].bEmprunte == 1)
+                    {
                             resultat = 2;
                     }
 
-                    if(pBibli->livres[i][j].bEmprunte == 0){
-
+                    if(pBibli->livres[i][j].bEmprunte == 0)
+                    {
                         pBibli->livres[i][j].bEmprunte = 1 ;
                         resultat = 1;
                     }
-
-
 
                 }
             }
         }
 
-        if(resultat == 1 ){
-
+        if(resultat == 1 )
+        {
             pBibli->rapport.nb_livres_emprunt++;
+            pBibli->rapport.nb_livres_dispo--;
 
-            if(pBibli->rapport.nb_livres_emprunt <= pBibli->rapport.nb_livres_dispo){
-
+            //if(pBibli->rapport.nb_livres_emprunt <= pBibli->rapport.nb_livres_dispo)
+            //{
                 printf("le livre de ISBN %d est maintenant emprunter!...\n",isbn);
+            //}
 
-            }
-            if(pBibli->rapport.nb_livres_emprunt > pBibli->rapport.nb_livres_dispo){
+            /*if(pBibli->rapport.nb_livres_emprunt > pBibli->rapport.nb_livres_dispo)
+            {
                 printf("Malheuresuement tous les livres sont emprunter...\n",isbn);
                 pBibli->rapport.nb_livres_emprunt--;
-            }
+            }*/
         }
 
-        if(resultat == 2){
+        if(resultat == 2)
+        {
             printf("Le livre de ISBN %d est deja emprunter ... \n");
         }
 
 
-        if(resultat == 0){
-
+        if(resultat == 0)
+        {
             printf("le livre de ISBN %d est introuvable dans le fichier %s ...\n",isbn,FICHIERBIBLIO);
         }
-
     }
 
-
-
-
-    else{
-
+    else
+    {
         printf("Pour emprunter un livre, vous devez ouvrir le fichier bibliotheque %s...\n",FICHIERBIBLIO);
-
     }
 
 	super_pause();
@@ -494,15 +482,18 @@ void gerer_retours(t_bibliotheque * pBibli)
 {
     int i=0;
     int j=0;
-	if(verifier_disp_bibliotheque(pBibli)){
+    if(verifier_disp_bibliotheque(pBibli))
+    {
+        pBibli->rapport.nb_livres_dispo += pBibli->rapport.nb_livres_emprunt;
+        pBibli->rapport.nb_livres_emprunt=0;
 
-       pBibli->rapport.nb_livres_emprunt=0;
-
-       for(i = 0; i < NB_GENRES; i++){
-            for(j = 0; j < pBibli->nb_livres[i]; j++){
+        for(i = 0; i < NB_GENRES; i++)
+        {
+            for(j = 0; j < pBibli->nb_livres[i]; j++)
+            {
                     pBibli->livres[i][j].bEmprunte=0;
             }
-       }
+        }
 
        printf("Tous les livres sont retourner et disponible ...\n");
 
@@ -520,14 +511,11 @@ void gerer_retours(t_bibliotheque * pBibli)
 
 void modifier_livre(t_bibliotheque * pBibli)
 {
-    int resultat;
+    int resultat = 0;
     int ISBN = 0;
 
     if(verifier_disp_bibliotheque(pBibli))
     {
-
-
-
         int i;
         int j;
         int int_data;
@@ -556,7 +544,9 @@ void modifier_livre(t_bibliotheque * pBibli)
                     do{
                         printf("Entrez le nouveau genre: ");
                         scanf(" %d", &int_data);
-                    }while(int_data < 0 || int_data > 5);
+                    }
+                    while(int_data < 0 || int_data > 5);
+
                     pBibli->livres[i][j].genre = (t_genre)int_data;
 
                     printf("Ecrivez le nouveau titre du livre: ");
@@ -574,38 +564,31 @@ void modifier_livre(t_bibliotheque * pBibli)
                     do{
                         printf("Entrez le nouveau nombre de pages: ");
                         scanf(" %d", &int_data);
-                    }while(int_data<0);
+                    }
+                    while(int_data<0);
+
                     pBibli->livres[i][j].nb_pages = int_data;
 
+                    resultat++;
 
                     printf("\nVous avez modifie le livre avec le ISBN: %d\n", ISBN);
                     super_pause();
-                }
-
-                if(pBibli->livres[i][j].isbn != ISBN){
-                    resultat=1;
 
                 }
-
             }
         }
 
+        if(resultat == 0)
+        {
+            printf("ISBN %d est introuvable...\n",ISBN);
+            super_pause();
+        }
     }
-
-
-    if(resultat == 1){
-
-        printf("ISBN %d est introuvable...\n",ISBN);
-        super_pause();
-
-    }
-
-    else{
-
+    else
+    {
         printf("Veuillez charger la bibliotheque avant de faire des modifications...\n");
         super_pause();
-   }
-
+    }
 
 
 }

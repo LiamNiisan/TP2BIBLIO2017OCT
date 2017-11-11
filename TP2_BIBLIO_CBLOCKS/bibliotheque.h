@@ -51,7 +51,6 @@ typedef struct
 int demander_choix_menu();
 
 void initialiser_bibliotheque(t_bibliotheque * pBibli);
-void initialiser_livre(t_livre * pLivre);
 void initialiser_rapport(t_bibliotheque * pBibli);
 
 void sauvegarder_fichier(t_bibliotheque * pBibli);
