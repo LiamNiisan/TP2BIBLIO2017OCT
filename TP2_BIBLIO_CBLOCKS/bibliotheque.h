@@ -55,7 +55,7 @@ void initialiser_livre(t_livre * pLivre);
 void initialiser_rapport(t_bibliotheque * pBibli);
 
 void sauvegarder_fichier(t_bibliotheque * pBibli);
-void lire_fichier(t_bibliotheque * pBibli);
+void lire_fichier(t_bibliotheque * pBibli, int * lecture);
 
 void simuler_lire_fichier(t_bibliotheque * pBibli);
 
