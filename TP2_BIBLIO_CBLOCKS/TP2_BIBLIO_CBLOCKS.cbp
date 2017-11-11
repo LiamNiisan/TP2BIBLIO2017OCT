@@ -35,6 +35,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="bibliotheque.h" />
+		<Unit filename="t_pile.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="t_pile.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

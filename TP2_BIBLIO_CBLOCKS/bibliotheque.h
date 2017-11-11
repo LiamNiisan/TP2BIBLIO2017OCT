@@ -1,7 +1,7 @@
 #ifndef BIBLIOTHEQUE_H
 #define BIBLIOTHEQUE_H
 
-//#include "t_pile.h"
+#include "t_pile.h"
 
 #define NB_LIVRES_MAX_RANGEE        100
 #define NB_GENRES                   6
@@ -18,7 +18,7 @@
 #define EMPRUNT         1
 #define DISPONIBLE      0
 
-typedef enum { AUCUN = 0, FICTION = 1, HISTOIRE = 2, SCIENCE = 3, ENFANTS = 4, INFORMATIQUE = 5 } t_genre;
+//typedef enum { AUCUN = 0, FICTION = 1, HISTOIRE = 2, SCIENCE = 3, ENFANTS = 4, INFORMATIQUE = 5 } t_genre;
 
 typedef struct
 {
@@ -28,7 +28,7 @@ typedef struct
 
 } t_rapport;
 
-typedef struct
+/*typedef struct
 {
 	t_genre genre;
 	int nb_pages;
@@ -37,7 +37,7 @@ typedef struct
 	char titre[TAILLE_TITRE];
 	int isbn;
 	int bEmprunte; // 1: Le livre a ete emprunte, 0: le livre est disponible.
-} t_livre;
+} t_livre;*/
 
 typedef struct
 {

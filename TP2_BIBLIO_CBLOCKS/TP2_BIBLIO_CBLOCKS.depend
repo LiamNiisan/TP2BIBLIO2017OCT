@@ -7,13 +7,16 @@
 
 1509464422 c:\users\ap06920\desktop\tp2biblio2017oct-master\tp2_biblio_cblocks\bibliotheque.h
 
-1510187715 source:d:\documents\ets\aut2017\inf145\tp\tp2\tp2biblio2017oct\tp2_biblio_cblocks\bibliotheque.c
+1510419318 source:d:\documents\ets\aut2017\inf145\tp\tp2\tp2biblio2017oct\tp2_biblio_cblocks\bibliotheque.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
+	<time.h>
+	<windows.h>
 	"bibliotheque.h"
 
-1510094445 d:\documents\ets\aut2017\inf145\tp\tp2\tp2biblio2017oct\tp2_biblio_cblocks\bibliotheque.h
+1510419188 d:\documents\ets\aut2017\inf145\tp\tp2\tp2biblio2017oct\tp2_biblio_cblocks\bibliotheque.h
+	"t_pile.h"
 
 1510075777 source:c:\users\ap06920\desktop\tp2biblio2017oct-master (4)\tp2biblio2017oct-master\tp2_biblio_cblocks\bibliotheque.c
 	<stdio.h>
@@ -22,4 +25,9 @@
 	"bibliotheque.h"
 
 1510073196 c:\users\ap06920\desktop\tp2biblio2017oct-master (4)\tp2biblio2017oct-master\tp2_biblio_cblocks\bibliotheque.h
+
+1510419295 d:\documents\ets\aut2017\inf145\tp\tp2\tp2biblio2017oct\tp2_biblio_cblocks\t_pile.h
+
+1510229978 source:d:\documents\ets\aut2017\inf145\tp\tp2\tp2biblio2017oct\tp2_biblio_cblocks\t_pile.c
+	"t_pile.h"
 
