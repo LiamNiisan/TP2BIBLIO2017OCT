@@ -1,3 +1,13 @@
+
+/******************************************************************************
+//TP2 - Bibliotheque virtuel
+//Gabarit originale par Yannick Roy
+//****************************************************************************
+//TP2 fait par
+//Badr Jaidi & Felix-Olivier Moreau
+//Les commentaires qui suivent seront pour decrire notre fonctionnement
+//*****************************************************************************/
+
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
@@ -14,9 +24,9 @@
 int main()
 {
 	// Déclaration des variables.
-	int choix_menu = 0;
-	int lecturefichier=0;
-	t_bibliotheque bibli;
+	int choix_menu = 0; //choix du menu option
+	int lecturefichier=0; //verification de la lecture fichier
+	t_bibliotheque bibli; //fichier principale de bibliotheque
 
 
 
@@ -57,26 +67,38 @@ int main()
 	return EXIT_SUCCESS;
 }
 
+/******************************************************************************
+//Lire_Fichier
+// ****************************************************************************
+//
+// La fonction permet de lire le fichier biblio.txt qui se trouve dans le
+// dossier du programme.Ensuite, il est enregistrer dans un tableau bibli.
+// Paramètres 	: t_bibliotheque * pBibli, int * lecture.
+// Retour 		: Void.
+//*****************************************************************************/
 void lire_fichier(t_bibliotheque * pBibli, int * lecture)
 {
+
     int cycle=*lecture;
 
     if(cycle == 0)
     {
-        FILE * fichierbiblio;
-        int i;
+        FILE * fichierbiblio; //fichier FILE
+        int i; //variable d'incrementation
         int nb_livre;
         int type_livre;
-        char data[100];
-        t_livre livre_temp;
+        char data[100]; //pour stocker de l'information
+        t_livre livre_temp; //fichier de livre temporaire
 
         fichierbiblio = fopen(BIBLIO_FICHIER,"r+");
 
+        //verifie si le fichier s'ouvre
         if(fichierbiblio==NULL)
         {
             printf("Erreur de lecture du fichier %s ... \n", FICHIERBIBLIO);
         }
 
+        //Si le fichier s'ouvre et transfert vers livre temporaire
         else
         {
             fgets(data, TAILLE_TITRE, fichierbiblio);
@@ -115,6 +137,8 @@ void lire_fichier(t_bibliotheque * pBibli, int * lecture)
                 pBibli->livres[type_livre][pBibli->nb_livres[type_livre]] = livre_temp;
                 pBibli->nb_livres[type_livre]++;
 
+
+                //pour chaque livre analyser, on les classes comme disponible ou emprunter
                 if(pBibli->livres[type_livre][i].bEmprunte == 0)
                 {
                     pBibli->rapport.nb_livres_dispo++;
@@ -125,6 +149,7 @@ void lire_fichier(t_bibliotheque * pBibli, int * lecture)
                 }
             }
 
+            //effet d'attente
             printf("Lecture du fichier de bibliotheque");
             Sleep(500);
             printf(".");
@@ -136,21 +161,27 @@ void lire_fichier(t_bibliotheque * pBibli, int * lecture)
             printf("Done\n");
         }
 
-        fclose(fichierbiblio);
+        fclose(fichierbiblio);//ferme le fichier
         cycle++;
         super_pause();
 
     }
-
+    //ce else permet d'empecher le reouverture du fichier pour eviter un bug
     else
     {
         printf("Vous avez deja ouvert le fichier %s ...\n",FICHIERBIBLIO);
         super_pause();
     }
-
+    //envois le cycle au pointeur de lecture
     *lecture = cycle;
 }
 
+/******************************************************************************
+//Super_Pause
+// ****************************************************************************
+//
+// Permet d'avoir un option "Touch Key for Continued"
+//*****************************************************************************/
 void super_pause()
 {
 	printf("Appuyez sur une touche pour continuer! \n");
@@ -164,10 +195,18 @@ void retirer_sautligne(char * chaine)
 		chaine[pos] = '\0'; // Si on trouve \n à la fin, on le remplace par \0
 }
 
+/******************************************************************************
+//demander_choix_menu
+// ****************************************************************************
+//
+// Fonction qui permet a l'utilisateur de choisir une option dans le menu
+// integration d'une limite si les choix sont hors demande
+// Retour 		: Void.
+//*****************************************************************************/
 int demander_choix_menu(){
-    system("cls");
+    system("cls");//efface l'ecran
 
-    int choix_user=0;
+    int choix_user=0; //variable pour le choix
 
 	printf("================================================================================\n");
 	printf("                                Bibliotheque 2000\n");
@@ -190,10 +229,19 @@ int demander_choix_menu(){
     do{
         scanf("%d",&choix_user);
 
-    }while(choix_user < 0 || choix_user > 9);
+    }while(choix_user < 0 || choix_user > 9); //limite du choix de l'utilisateur
 
 }
 
+/******************************************************************************
+//Initialiser_bibliotheque
+// ****************************************************************************
+//
+//Permet de mettre a 0 tous les livres de tous les genres
+//
+// Paramètres 	: t_bibliotheque * pBibli.
+// Retour 		: Void.
+//*****************************************************************************/
 void initialiser_bibliotheque(t_bibliotheque * pBibli)
 {
     int i;
@@ -204,30 +252,50 @@ void initialiser_bibliotheque(t_bibliotheque * pBibli)
     }
 }
 
+/******************************************************************************
+//initialiser rapport d'emprunt et de disponibilite
+// ****************************************************************************
+//
+// La fonction permet de lire le fichier biblio.txt qui se trouve dans le
+// dossier du programme.Ensuite, il est enregistrer dans un tableau bibli.
+// Paramètres 	: t_bibliotheque * pBibli.
+// Retour 		: Void.
+//*****************************************************************************/
 void initialiser_rapport(t_bibliotheque * pBibli)
 {
     pBibli->rapport.nb_livres_dispo=0;
     pBibli->rapport.nb_livres_emprunt=0;
 }
 
+/******************************************************************************
+//Sauvegarder_fichier
+// ****************************************************************************
+//
+// permet de prendre les modifications du tableau de bibli et de les sauvegarder
+// dans le fichier de biblio.txt
+// Paramètres 	: t_bibliotheque * pBibli.
+// Retour 		: Void.
+//*****************************************************************************/
 void sauvegarder_fichier(t_bibliotheque * pBibli)
 {
 
     if(verifier_disp_bibliotheque(pBibli))
     {
 
-        FILE * fichierbiblio;
-        int i;
-        int j;
+        FILE * fichierbiblio; //fichier de biblio.txt
+        int i; //variable d'incrementation
+        int j; //variable d'incrementation
         int nb_livre = 0;
         char data[100];
 
-        fichierbiblio = fopen(BIBLIO_FICHIER,"w+");
+        fichierbiblio = fopen(BIBLIO_FICHIER,"w+"); //ouvre le fichier pour ecriture W+
 
+        //permet de verifier si le fichier ouvre
         if(fichierbiblio==NULL){
             printf("Erreur de lecture du fichier %s ... \n", FICHIERBIBLIO);
         }
 
+        //si le fichier ouvre...
         else{
 
             for(i = 0; i < NB_GENRES; i++)
@@ -276,7 +344,7 @@ void sauvegarder_fichier(t_bibliotheque * pBibli)
                     fputs("\n", fichierbiblio);
                 }
             }
-
+            //effet de chargement
             printf("Sauvegarde en cours");
             Sleep(500);
             printf(".");
@@ -288,9 +356,10 @@ void sauvegarder_fichier(t_bibliotheque * pBibli)
             printf("Done\n");
         }
 
-        fclose(fichierbiblio);
+        fclose(fichierbiblio);//ferme le fichier biblio.txt
         super_pause();
     }
+    //message si la lecture n'a pas ete fait
     else
     {
         printf("Vous ne pouvez pas sauvegarder vos modificiations avant d'avoir ouvert le fichier...\n");
@@ -298,6 +367,17 @@ void sauvegarder_fichier(t_bibliotheque * pBibli)
     }
 
 }
+
+/******************************************************************************
+//Trier_livres
+// ****************************************************************************
+//
+// Cette fonction est pour le Bonus. Il permet de trier les livre en ordre
+// croissant.
+//
+// Paramètres 	: t_bibliotheque * pBibli.
+// Retour 		: Void.
+//*****************************************************************************/
 void trier_livres(t_bibliotheque * pBibli)
 {
     if(verifier_disp_bibliotheque(pBibli))
@@ -355,7 +435,7 @@ void trier_livres(t_bibliotheque * pBibli)
     super_pause();
 
     }
-
+    //ce message est si la lecture de bibliotecque n'a pas ete fait
     else{
 
         printf("Impossible de trier la bibliotheque... Veuillez lire le fichier %s avant de trier\n",FICHIERBIBLIO);
@@ -363,16 +443,26 @@ void trier_livres(t_bibliotheque * pBibli)
     }
 }
 
+/******************************************************************************
+//afficher_bibliotheque
+// ****************************************************************************
+//
+//Fonction avec des boucles afin d'afficher a l'utilisateur tous les livres.
+//
+// Paramètres 	: t_bibliotheque * pBibli.
+// Retour 		: Void.
+//*****************************************************************************/
 void afficher_bibliotheque(t_bibliotheque * pBibli)
 {
-    int i;
-    int j;
+    int i; //variable d'incrementation
+    int j; //variable d'incrementation
 
 
 	if(verifier_disp_bibliotheque(pBibli))
     {
-        system("cls");
+        system("cls"); //efface l'ecran
 
+        //va chercher tous les livres de toutes les categories
         for(i = 0; i < NB_GENRES; i++)
         {
             for(j = 0; j < pBibli->nb_livres[i]; j++)
@@ -388,6 +478,7 @@ void afficher_bibliotheque(t_bibliotheque * pBibli)
             }
         }
     }
+    //le message est si la lecture du fichier biblio.txt n'a pas ete fait
     else
     {
         printf("Bibliotheque vide, veuillez l'actualiser... \n");
@@ -396,6 +487,16 @@ void afficher_bibliotheque(t_bibliotheque * pBibli)
     super_pause();
 }
 
+/******************************************************************************
+//Generer rapport
+// ****************************************************************************
+//
+// Cette fonction permet d'afficher le rapport avec les informations que nous
+// avons enregistrer dans la biblio
+//
+// Paramètres 	: t_bibliotheque * pBibli.
+// Retour 		: Void.
+//*****************************************************************************/
 void generer_rapport(t_bibliotheque * pBibli)
 {
     printf("#######################################\n");
@@ -405,20 +506,30 @@ void generer_rapport(t_bibliotheque * pBibli)
     super_pause();
 }
 
+/******************************************************************************
+//emprunter_livre
+// ****************************************************************************
+//
+// Fonction qui permet de gerer l'emprunt des livres
+//
+// Paramètres 	: t_bibliotheque * pBibli.
+// Retour 		: Void.
+//*****************************************************************************/
 void emprunter_livre(t_bibliotheque * pBibli)
 {
     int isbn=0;
-    int i=0;
-    int j=0;
+    int i=0; //variable d'incrementation
+    int j=0; //variable d'incrementation
     int resultat=100;
 
     if(verifier_disp_bibliotheque(pBibli)){
 
         resultat = 0;
-
+        //le choix du ISBN de l'utilisateur
         printf("Entrez le ISBN du livre que vous voulez emprunter : ");
         scanf("%d",&isbn);
 
+        //verifie chaque livre afin de voir si le ISBN de l'utilsateur existe
         for(i = 0; i < NB_GENRES; i++)
         {
             for(j = 0; j < pBibli->nb_livres[i]; j++)
@@ -441,35 +552,28 @@ void emprunter_livre(t_bibliotheque * pBibli)
             }
         }
 
+        //si le ISBN de l'utilisateur est disponible
         if(resultat == 1 )
         {
             pBibli->rapport.nb_livres_emprunt++;
             pBibli->rapport.nb_livres_dispo--;
 
-            //if(pBibli->rapport.nb_livres_emprunt <= pBibli->rapport.nb_livres_dispo)
-            //{
-                printf("le livre de ISBN %d est maintenant emprunter!...\n",isbn);
-            //}
+            printf("le livre de ISBN %d est maintenant emprunter!...\n",isbn);
 
-            /*if(pBibli->rapport.nb_livres_emprunt > pBibli->rapport.nb_livres_dispo)
-            {
-                printf("Malheuresuement tous les livres sont emprunter...\n",isbn);
-                pBibli->rapport.nb_livres_emprunt--;
-            }*/
         }
-
+        //si le ISBN de l'utilisateur est deja emprunter
         if(resultat == 2)
         {
-            printf("Le livre de ISBN %d est deja emprunter ... \n");
+            printf("Le livre de ISBN %d est deja emprunter ... \n",isbn);
         }
 
-
+        //si le ISBN de l'utilisateur est pas trouvable
         if(resultat == 0)
         {
             printf("le livre de ISBN %d est introuvable dans le fichier %s ...\n",isbn,FICHIERBIBLIO);
         }
     }
-
+    //ce message est si le fichier biblio.txt n'a pas ete lu
     else
     {
         printf("Pour emprunter un livre, vous devez ouvrir le fichier bibliotheque %s...\n",FICHIERBIBLIO);
@@ -478,15 +582,28 @@ void emprunter_livre(t_bibliotheque * pBibli)
 	super_pause();
 }
 
+/******************************************************************************
+//gerer_retours
+// ****************************************************************************
+//
+// Permet de remettre le rapport d'emprunt a 0
+// Permet de remettre disponible les livres de la bibliotheque
+//
+// Paramètres 	: t_bibliotheque * pBibli.
+// Retour 		: Void.
+//*****************************************************************************/
 void gerer_retours(t_bibliotheque * pBibli)
 {
-    int i=0;
-    int j=0;
+    int i=0; //variable d'incrementation
+    int j=0; //variable d'incrementation
+
+    //si le fichier biblio.txt a ete lu
     if(verifier_disp_bibliotheque(pBibli))
     {
-        pBibli->rapport.nb_livres_dispo += pBibli->rapport.nb_livres_emprunt;
-        pBibli->rapport.nb_livres_emprunt=0;
+        pBibli->rapport.nb_livres_dispo += pBibli->rapport.nb_livres_emprunt;//livre disponible obtient la valeur de livre emprunter
+        pBibli->rapport.nb_livres_emprunt=0; //livre emprunter devient 0
 
+        //tous les livres de tous les genres mettre leur valeur d'emprunter a 0
         for(i = 0; i < NB_GENRES; i++)
         {
             for(j = 0; j < pBibli->nb_livres[i]; j++)
@@ -498,7 +615,7 @@ void gerer_retours(t_bibliotheque * pBibli)
        printf("Tous les livres sont retourner et disponible ...\n");
 
 	}
-
+    //si le fichier biblio.txt n'a pas ete lu
 	else{
 
         printf("Vous devez lire le fichier %s avant de faire des retours ...\n",FICHIERBIBLIO);
@@ -508,24 +625,34 @@ void gerer_retours(t_bibliotheque * pBibli)
     super_pause();
 
 }
-
+/******************************************************************************
+//modifier_livre
+// ****************************************************************************
+//
+//Cette fonction permet de choisir un livre par son ISBN et de modifier son contenue
+//
+// Paramètres 	: t_bibliotheque * pBibli.
+// Retour 		: Void.
+//*****************************************************************************/
 void modifier_livre(t_bibliotheque * pBibli)
 {
-    int resultat = 0;
+    int resultat = 0; //varible qui permet d'avoir des conditions
     int ISBN = 0;
 
     if(verifier_disp_bibliotheque(pBibli))
     {
-        int i;
-        int j;
+        int i; //variable d'incrementation
+        int j; //variable d'incrementation
         int int_data;
         char char_data[100];
 
-        system("cls");
+        system("cls"); //efface l'ecran
 
+        //enregistre le choix de l'utilisateur dans la variable ISBN
         printf("Entrez le ISBN du livre a modifier : ");
         scanf("%d", &ISBN);
 
+        //trouve le ISBN de l'utilisateur parmis le tableau des livres
         for(i = 0; i < NB_GENRES; i++)
         {
             for(j = 0; j < pBibli->nb_livres[i]; j++)
@@ -541,6 +668,7 @@ void modifier_livre(t_bibliotheque * pBibli)
                     printf("Emprunte: %d \n", pBibli->livres[i][j].bEmprunte);
                     printf("-----------------\n");
 
+                    //section de modification du livre de l'utilisateur
                     do{
                         printf("Entrez le nouveau genre: ");
                         scanf(" %d", &int_data);
@@ -578,12 +706,14 @@ void modifier_livre(t_bibliotheque * pBibli)
             }
         }
 
+        //si le ISBN de l'utilisateur est introuvable
         if(resultat == 0)
         {
             printf("ISBN %d est introuvable...\n",ISBN);
             super_pause();
         }
     }
+    //si le fichier biblio.txt n'a pas ete lu
     else
     {
         printf("Veuillez charger la bibliotheque avant de faire des modifications...\n");
@@ -592,18 +722,28 @@ void modifier_livre(t_bibliotheque * pBibli)
 
 
 }
-
+/******************************************************************************
+//retirer_livre
+// ****************************************************************************
+//
+// Cette fonction permet de retirer un livre de la bibliotheque
+//
+// Paramètres 	: t_bibliotheque * pBibli.
+// Retour 		: Void.
+//*****************************************************************************/
 void retirer_livre(t_bibliotheque * pBibli)
 {
+        //si la lecture du fichier biblio.txt a ete lu
         if(verifier_disp_bibliotheque(pBibli))
         {
             int ISBN = 0;
-            int i;
-            int j;
-            int k;
+            int i; //variable d'incrementation
+            int j; //variable d'incrementation
+            int k; //variable d'incrementation
             t_livre null_livre;
             int dispo = 0;
 
+            //choix de l'tulisateur sur le ISBN a suprimer
             printf("Entrez le ISBN du livre a modifier : ");
             scanf("%d", &ISBN);
 
@@ -616,7 +756,6 @@ void retirer_livre(t_bibliotheque * pBibli)
                         if(pBibli->livres[i][j].bEmprunte)
                         {
                             pBibli->rapport.nb_livres_emprunt--;
-                            pBibli->rapport.nb_livres_dispo--;
                         }
                         else
                         {
@@ -638,22 +777,32 @@ void retirer_livre(t_bibliotheque * pBibli)
 
         }
 
+        //si le fichier biblio.txt n'a pas ete lu
         else{
             printf("Pour retirer un livre, vous devez lire le fichier de bibliotheque %s \n",FICHIERBIBLIO);
             super_pause();
         }
 }
 
-
+/******************************************************************************
+//verifier_disp_bibliotheque
+// ****************************************************************************
+//
+// Cette fonction est tres utiliser dans plusieurs des fonctions. Permet de verifier
+// si la le fichier biblio.txt a ete lu dans l'option 2 de choix menu
+//
+// Paramètres 	: t_bibliotheque * pBibli.
+// Retour 		: int.
+//*****************************************************************************/
 int verifier_disp_bibliotheque(t_bibliotheque * pBibli)
 {
-    int i;
-    int rempli = 0;
+    int i; //variable d'incrementation
+    int rempli = 0; //variable de return pour savoir si le fichier est lu ou pas
     for(i = 0; i < NB_GENRES; i++)
     {
         if (pBibli->nb_livres[i] != 0)
         {
-            rempli++;
+            rempli++; //s'il y a pas de 0, alors fichier lu
         }
     }
 
