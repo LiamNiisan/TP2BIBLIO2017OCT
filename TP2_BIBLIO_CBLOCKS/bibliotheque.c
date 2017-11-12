@@ -28,10 +28,6 @@ int main()
 	int lecturefichier=0; //verification de la lecture fichier
 	t_bibliotheque bibli; //fichier principale de bibliotheque
 
-
-
-
-
 	// Initialisation de la fonction rand()
 	srand(time(NULL));
 
@@ -188,6 +184,12 @@ void super_pause()
 	_getch();
 }
 
+/******************************************************************************
+//retirer_sautligne
+// ****************************************************************************
+//
+// Permet de garder une chaine de caracteres en une seule ligne
+//*****************************************************************************/
 void retirer_sautligne(char * chaine)
 {
 	int pos = strlen(chaine) - 1;
@@ -392,52 +394,56 @@ void trier_livres(t_bibliotheque * pBibli)
 
         init_pile(&pile_livres);
 
-        dernier_element.isbn = 0;
-        empile(&pile_livres, dernier_element);
-        dernier_isbn = MAX_ISBN;
+        dernier_element.isbn = 0;//initialiser le dernier element pour etre sur que tout va etre compare a la plus petite valeur possible
+        empile(&pile_livres, dernier_element);//mettre la plus petite valeur possible dans la pile au debut pour pouvoir la comparer
+        dernier_isbn = MAX_ISBN;//initialiser le dernier ISBN a la valeur max pour que le premier ISBN puisse etre enregistre
 
 
-        nombre_livres = pBibli->rapport.nb_livres_dispo + pBibli->rapport.nb_livres_emprunt;
+        nombre_livres = pBibli->rapport.nb_livres_dispo + pBibli->rapport.nb_livres_emprunt;//le nombre de livres total, donc livres disponibles et empruntes
 
-        for(k = 0; k < nombre_livres; k++)
+        for(k = 0; k < nombre_livres; k++) //boucle pour comparer tout les livres un par un
         {
-            empile(&pile_livres, dernier_element);
+            empile(&pile_livres, dernier_element);//etre sur de comparer a la plus petite valeur possible
 
+            //on compare chacun des livres a tout les autres livres pour touver qui est plus grand
             for(i = 0; i < NB_GENRES; i++)
             {
                 for(j = 0; j < pBibli->nb_livres[i]; j++)
                 {
+                    //Si il est plus grand que le livre dans la pile et plus petit que celui qui etait la avant, on sait que il est a la bonne place
                     if((getSansEnlever(&pile_livres).isbn < pBibli->livres[i][j].isbn) && (pBibli->livres[i][j].isbn < dernier_isbn))
                     {
+                        //on remplace dans la pile par celui qui est plus grand
                         desempile(&pile_livres);
                         empile(&pile_livres, pBibli->livres[i][j]);
                     }
                 }
             }
 
-            dernier_isbn = getSansEnlever(&pile_livres).isbn;
-    }
+            dernier_isbn = getSansEnlever(&pile_livres).isbn;//mettre le dernier livre rajouter pour etre sur que celui qui va suivre ne va pas etre plus grand
+        }
 
-    for(i = 0; i < nombre_livres; i++)
-    {
-        dernier_element = desempile(&pile_livres);
-        printf("----------------- \n");
-        printf("Titre: %s \n", dernier_element.titre);
-        printf("Auteur: %s %s \n", dernier_element.auteur_prenom, dernier_element.auteur_nom);
-        printf("Genre: %d \n", dernier_element.genre);
-        printf("Pages: %d \n", dernier_element.nb_pages);
-        printf("ISBN: %d \n", dernier_element.isbn);
-        printf("Emprunte: %d \n", dernier_element.bEmprunte);
-        printf("-----------------\n");
-    }
+        //Les livres sont affiches un par un en ordre croissant a partir de la pile
+        for(i = 0; i < nombre_livres; i++)
+        {
+            dernier_element = desempile(&pile_livres);
+            printf("----------------- \n");
+            printf("Titre: %s \n", dernier_element.titre);
+            printf("Auteur: %s %s \n", dernier_element.auteur_prenom, dernier_element.auteur_nom);
+            printf("Genre: %d \n", dernier_element.genre);
+            printf("Pages: %d \n", dernier_element.nb_pages);
+            printf("ISBN: %d \n", dernier_element.isbn);
+            printf("Emprunte: %d \n", dernier_element.bEmprunte);
+            printf("-----------------\n");
+        }
 
-    printf("\nLes livres on ete trie par ordre croissant de ISBN\n");
-    super_pause();
+        printf("\nLes livres on ete trie par ordre croissant de ISBN\n");
+        super_pause();
 
     }
     //ce message est si la lecture de bibliotecque n'a pas ete fait
-    else{
-
+    else
+    {
         printf("Impossible de trier la bibliotheque... Veuillez lire le fichier %s avant de trier\n",FICHIERBIBLIO);
         super_pause();
     }
@@ -697,7 +703,7 @@ void modifier_livre(t_bibliotheque * pBibli)
 
                     pBibli->livres[i][j].nb_pages = int_data;
 
-                    resultat++;
+                    resultat++;// si un livre a ete trouve, on le signale
 
                     printf("\nVous avez modifie le livre avec le ISBN: %d\n", ISBN);
                     super_pause();
@@ -753,6 +759,7 @@ void retirer_livre(t_bibliotheque * pBibli)
                 {
                     if(pBibli->livres[i][j].isbn == ISBN)
                     {
+                        //Mettre a jour le rapport selon le status du livre
                         if(pBibli->livres[i][j].bEmprunte)
                         {
                             pBibli->rapport.nb_livres_emprunt--;
@@ -763,6 +770,7 @@ void retirer_livre(t_bibliotheque * pBibli)
                         }
 
 
+                        //Pousser toutes les cases de livres a gauche a la place du livre enleve
                         for(k = j; k < (pBibli->nb_livres[i] - 1); k++)
                         {
                             pBibli->livres[i][k] = pBibli->livres[i][k + 1];
