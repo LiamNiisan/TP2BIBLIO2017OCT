@@ -3,8 +3,9 @@
 //TP2 - Bibliotheque virtuel
 //Gabarit originale par Yannick Roy
 //****************************************************************************
-//TP2 fait par
-//Badr Jaidi & Felix-Olivier Moreau
+//TP2 - bibliotheque.c fait par
+//Badr Jaidi (JAIB06029608) & Felix-Olivier Moreau (MORF30059700)
+//Novembre 2017
 //Les commentaires qui suivent seront pour decrire notre fonctionnement
 //*****************************************************************************/
 

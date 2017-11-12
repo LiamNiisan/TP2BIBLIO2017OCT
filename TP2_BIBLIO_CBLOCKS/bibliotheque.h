@@ -1,3 +1,13 @@
+/******************************************************************************
+//TP2 - Bibliotheque virtuel
+//Gabarit originale par Yannick Roy
+//****************************************************************************
+//TP2 - bibliotheque.h fait par
+//Badr Jaidi (JAIB06029608) & Felix-Olivier Moreau (MORF30059700)
+//Novembre 2017
+//Les commentaires qui suivent seront pour decrire notre fonctionnement
+//*****************************************************************************/
+
 #ifndef BIBLIOTHEQUE_H
 #define BIBLIOTHEQUE_H
 
